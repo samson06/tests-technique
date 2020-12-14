@@ -1,0 +1,19 @@
+server:
+  port: 8086
+  
+spring:
+  datasource:
+    driverClassName: org.hsqldb.jdbc.JDBCDriver
+    platform: hsql
+    url: jdbc:hsqldb:mem:eventdb;DB_CLOSE_DELAY=-1 
+    username: sa
+    password: 
+#    initialization-mode: always
+#    continue-on-error: true
+  jpa:
+#    database: hsql
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+    properties: 
+      hibernate.format_sql: true #
