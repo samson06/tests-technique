@@ -4,16 +4,23 @@
 
 * My Event is an application to manage musical events.
 
+![](https://img.shields.io/badge/build-success-brightgreen.svg)
 
 ## Technical stack
+
+![](https://img.shields.io/badge/Java-✓-blue.svg)
+![](https://img.shields.io/badge/Maven-✓-blue.svg)
+![](https://img.shields.io/badge/Spring_boot-✓-blue.svg)
+![](https://img.shields.io/badge/Jpa-✓-blue.svg)
+![](https://img.shields.io/badge/Hibernate-✓-blue.svg)
+![](https://img.shields.io/badge/HSQLDB-✓-blue.svg)
+![](https://img.shields.io/badge/Docker-✓-blue.svg)
 
 * This is a maven project.
 * It uses HSQLDB as an in-memory database.
 * It starts using this maven lifecycle ```mvn spring-boot:run``` or using the IDE
-* The user interface is available at [http://localhost:8080]
-* The API resources are available at [http://localhost:8080/api/] 
-
-![](https://img.shields.io/badge/build-success-brightgreen.svg)
+* The user interface is available at [http://localhost:8086]
+* The API resources are available at [http://localhost:8086/api/] 
 
 ## Context
 
