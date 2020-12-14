@@ -14,7 +14,7 @@
 ![](https://img.shields.io/badge/Jpa-✓-blue.svg)
 ![](https://img.shields.io/badge/Hibernate-✓-blue.svg)
 ![](https://img.shields.io/badge/HSQLDB-✓-blue.svg)
-![](https://img.shields.io/badge/Docker-✓-blue.svg)
+![](https://img.shields.io/badge/Angular_JS-✓-blue.svg)
 
 * This is a maven project.
 * It uses HSQLDB as an in-memory database.
