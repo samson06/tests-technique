@@ -13,6 +13,8 @@
 * The user interface is available at [http://localhost:8080]
 * The API resources are available at [http://localhost:8080/api/] 
 
+![](https://img.shields.io/badge/build-success-brightgreen.svg)
+
 ## Context
 
 * The user interface is tested and holds no identified issues. 
