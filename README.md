@@ -1,11 +1,16 @@
-# My Event REST API ![App-Buil-State](https://img.shields.io/badge/build-success-brightgreen.svg)
+# 'My Event' REST API ![App-Build-State](https://img.shields.io/badge/build-success-brightgreen.svg?branch=master)
 
-My Event is an application to manage musical events (proposed by _**ADEO Services**_ for _**technical tests** _).
-My Event is simple RESTful web service using Spring and Java. This web service provides an in-memory musical events management service, with the capability to :
+'My Event' is an application to manage musical events (proposed by _**ADEO Services**_ for _**technical tests**_).
+'My Event' is simple RESTful web service using Spring and Java. This web service provides an in-memory musical events management Back-End service, with the capability to :
 - Retrieve a list of musical events and their relationships in the system.
 - Delete a musical events and their relationships in the system.
-- Create or Update musical events information in the system.
+- Update musical events information in the system.
 - Retrieve a filtered list (one band has a member with the name matching the given pattern) of musical events in the system.
+
+For the Front-end, the user interface allows to :
+- Displaying  a list of musical events. 
+- Deleting a musical events.
+- Updating musical events information.
 
 ## Technical stack
 
@@ -19,11 +24,8 @@ My Event is simple RESTful web service using Spring and Java. This web service p
 
 * This is a maven project.
 * It uses HSQLDB as an in-memory database.
-* It starts using this maven lifecycle ```mvn spring-boot:run``` or using the IDE
-* The user interface is available at [http://localhost:8086]
-* The API resources are available at [http://localhost:8086/api/] 
 
-### Change configuration
+### Change 'My Event' configuration
 Edit the configuration in the file [application.yml](/tests-technique/src/main/resources/application.yml)
 ```
 server:
@@ -44,12 +46,11 @@ spring:
     properties: 
       hibernate.format_sql: true #
 ```
+### Starting the Event Management System
 
-## Context
-
-* The user interface is tested and holds no identified issues. 
-* We Identified a few things not working on the API.
-* Your job is to fix the issues and add a new feature to the API.
+* It starts using this maven lifecycle ```mvn spring-boot:run``` or using the IDE
+* The user interface is available at [http://localhost:<server.port>]
+* The API resources are available at [http://localhost:<server.port>/api/] 
 
 ## Identified Issues:
 
