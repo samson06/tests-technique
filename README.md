@@ -30,9 +30,10 @@ For the Front-end, the user interface allows to :
 ### Change 'My Event' configuration
 Edit the configuration in the file [application.yml](/tests-technique/src/main/resources/application.yml)
 ```
+# App custom config
 server:
   port: 8086
-  
+# Database Configuration
 spring:
   datasource:
     driverClassName: org.hsqldb.jdbc.JDBCDriver
@@ -47,6 +48,9 @@ spring:
       ddlAuto: ""
     properties: 
       hibernate.format_sql: true #
+# Logger configuration
+logging:
+  config: classpath:logback-spring.xml
 ```
 ### Starting the Event Management System
 
