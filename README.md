@@ -24,7 +24,7 @@ For the Front-end, the user interface allows to :
 
 - This is a maven project.
 - It uses HSQLDB as an in-memory database.
-- It uses Angular JS for Front-End usr interface.
+- It uses Angular JS for Front-End user interface.
 - It uses JPA/Hibernate for ORM and DAO concepts.
 
 ### Change 'My Event' configuration
