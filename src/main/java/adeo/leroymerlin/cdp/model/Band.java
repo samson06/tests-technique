@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,8 +33,8 @@ public class Band implements Serializable {
     @Column
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private Set<Member> members;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Member> members; // Association with MEMBER
 
     public Set<Member> getMembers() {
         return members;

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,8 +36,8 @@ public class Event implements Serializable {
     @Column
     private String imgUrl;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private Set<Band> bands;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Band> bands; // Association with BAND
 
     @Column
     private Integer nbStars;

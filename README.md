@@ -3,11 +3,11 @@
 'My Event' is an application to manage musical events (proposed by _**ADEO Services**_ for _**technical tests**_).
 'My Event' is simple RESTful web service using Spring and Java. 
 This web service provides an in-memory musical events management **Back-End** service, with the capability to :
-- Retrieve a list of musical events and their relationships in the system.
+- Get a list of musical events and their relationships in the system.
 - Delete a musical events and their relationships in the system.
 - Update musical events information in the system.
-- Retrieve a filtered list (one band has a member with the name matching the given pattern) of musical events in the system.
-- Retrieve a musical events by her technical identifier.
+- Get a filtered list (one band has a member with the name matching the given pattern) of musical events in the system.
+- Find a musical events by her technical identifier.
 - Save or persist a musical events information .
 
 For the Front-end, the user interface allows to :
@@ -67,15 +67,20 @@ _1. Adding review does not work_
 - No entry point for the user interface to trigger the update action.
 - In the controller the called function for updating is empty.
 - In the service and DAO layers, no functions either to search for it by identifier or to save (persistence or update) data.
+- No cascaded persistence propagation defined in associations (model layer).
+- The transaction is readOnly activate (can't write, update, delete).
 
 _2. Using the delete button works but elements comes back when i refresh the page_ 
-- No entry point for the user interface to trigger the update action.
+- The transaction is readOnly activate (can't write, update, delete).
+- The suppress operation not really done in database.
 
-## Identified Issues Solutions :
+## Issues Solutions Elements :
 
 _1. Adding review does not work_
 - Adding new component on the user interface to triggering the update action.
+- In model layer activate cascaded propagation in associations for data persistence ou update.
 - DAO layer : 
+	- remove transaction readOnly activation.
 	- adding new function to retrieve by her identifier a musical event with bands.
 	- adding new function to save a musical event with bands.
 - Service layer : integrated DAO layer functions. 

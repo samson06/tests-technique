@@ -46,6 +46,7 @@
                             <textarea placeholder="Ajouter un commentaire" ng-model="event.comment" ng-model-options="{ debounce: 1000 }" ng-change="events.updateStars(event)" class="form-control" rows="3"></textarea>
                         </form>
                         <div class="pull-right">
+                            <button ng-click="events.updateStars(event)" type="button" class="btn btn-primary">Update <i class="fa fa-refresh" aria-hidden="true"></i></button>
                             <button ng-click="events.deleteEvent(event)" type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
                         </div>
                     </div>

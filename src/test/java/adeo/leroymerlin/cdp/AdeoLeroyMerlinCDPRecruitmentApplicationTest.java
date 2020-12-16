@@ -28,7 +28,7 @@ public class AdeoLeroyMerlinCDPRecruitmentApplicationTest
     @Test
     public void contextLoads()
     {
-        //
+
     }
 
 }
