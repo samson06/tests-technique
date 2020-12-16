@@ -1,11 +1,14 @@
-# 'My Event' REST API ![App-Build-State](https://img.shields.io/badge/build-success-brightgreen.svg?branch=master)
+# Event Management REST API ![App-Build-State](https://img.shields.io/badge/build-success-brightgreen.svg?branch=master)
 
 'My Event' is an application to manage musical events (proposed by _**ADEO Services**_ for _**technical tests**_).
-'My Event' is simple RESTful web service using Spring and Java. This web service provides an in-memory musical events management Back-End service, with the capability to :
+'My Event' is simple RESTful web service using Spring and Java. 
+This web service provides an in-memory musical events management **Back-End** service, with the capability to :
 - Retrieve a list of musical events and their relationships in the system.
 - Delete a musical events and their relationships in the system.
 - Update musical events information in the system.
 - Retrieve a filtered list (one band has a member with the name matching the given pattern) of musical events in the system.
+- Retrieve a musical events by her technical identifier.
+- Save or persist a musical events information .
 
 For the Front-end, the user interface allows to :
 - Displaying  a list of musical events. 
@@ -27,7 +30,7 @@ For the Front-end, the user interface allows to :
 - It uses Angular JS for Front-End user interface.
 - It uses JPA/Hibernate for ORM and DAO concepts.
 
-### Change 'My Event' configuration
+### Change Event Management configuration
 Edit the configuration in the file [application.yml](/tests-technique/src/main/resources/application.yml)
 ```yml
 # App custom config
@@ -58,14 +61,18 @@ logging:
 - The user interface is available at : _http://localhost:<server.port>_
 - The API resources are available at : _http://localhost:<server.port>/api/_ 
 
+
 ## Identified Issues:
 
 ```
 Please keep track (notes) of how you analysed and fixed the issues to help us 
 understand the steps during the interview
 ```
-
 1. Adding review does not work
+- No entry point at the user interface for triggering the update action.
+- In the controller the function called for the update is empty.
+
+
 2. Using the delete button works but elements comes back when i refresh the page 
 
 ## New Feature
