@@ -55,8 +55,8 @@ logging:
 ### Starting the Event Management System
 
 - It starts using this maven lifecycle ``` mvn spring-boot:run``` or using the IDE
-- The user interface is available at [http://localhost:<server.port>]
-- The API resources are available at [http://localhost:<server.port>/api/] 
+- The user interface is available at : _http://localhost:<server.port>_
+- The API resources are available at : _http://localhost:<server.port>/api/_ 
 
 ## Identified Issues:
 
