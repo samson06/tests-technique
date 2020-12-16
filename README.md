@@ -61,19 +61,33 @@ logging:
 - The user interface is available at : _http://localhost:<server.port>_
 - The API resources are available at : _http://localhost:<server.port>/api/_ 
 
-
-## Identified Issues:
+## Identified Issues Analysis :
 
 ```
 Please keep track (notes) of how you analysed and fixed the issues to help us 
 understand the steps during the interview
 ```
-1. Adding review does not work
-- No entry point at the user interface for triggering the update action.
-- In the controller the function called for the update is empty.
+**1. Adding review does not work**
+- No entry point for the user interface to trigger the update action.
+- In the controller the called function for updating is empty.
+- In the service and DAO layers, no functions either to search for it by identifier or to save (persistence or update) data.
+
+**2. Using the delete button works but elements comes back when i refresh the page** 
+- 
+## Identified Issues Solutions :
+
+**1. Adding review does not work**
+- Add new component on the user interface to triggering the update action.
+- DAO layer : 
+	- add new function to retrieve by her identifier a musical event with bands.
+	- add new function to save a musical event with bands.
+- Service layer : integrated DAO layer functions. 
+- Realize Tests for all components (Unit, Integration, Functional Tests).
 
 
-2. Using the delete button works but elements comes back when i refresh the page 
+**2. Using the delete button works but elements comes back when i refresh the page** 
+- 
+
 
 ## New Feature
 ```
