@@ -25,7 +25,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EntityScan("adeo.leroymerlin.cdp.model")
 @EnableJpaRepositories(basePackages = "adeo.leroymerlin.cdp.repository")
 @EnableTransactionManagement
-public class MyEvenBaseConfig
+public class MyEventBaseConfig
 {
     //
 }
