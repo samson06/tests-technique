@@ -69,20 +69,21 @@ _1. Adding review does not work_
 - In the service and DAO layers, no functions either to search for it by identifier or to save (persistence or update) data.
 
 _2. Using the delete button works but elements comes back when i refresh the page_ 
-- 
+- No entry point for the user interface to trigger the update action.
+
 ## Identified Issues Solutions :
 
-**1. Adding review does not work**
-- Add new component on the user interface to triggering the update action.
+_1. Adding review does not work_
+- Adding new component on the user interface to triggering the update action.
 - DAO layer : 
-	- add new function to retrieve by her identifier a musical event with bands.
-	- add new function to save a musical event with bands.
+	- adding new function to retrieve by her identifier a musical event with bands.
+	- adding new function to save a musical event with bands.
 - Service layer : integrated DAO layer functions. 
 - Realize Tests for all components (Unit, Integration, Functional Tests).
 
 
-**2. Using the delete button works but elements comes back when i refresh the page** 
-- 
+_2. Using the delete button works but elements comes back when i refresh the page_ 
+
 
 
 ## New Feature
