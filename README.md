@@ -1,4 +1,4 @@
-# My Event REST API
+# My Event REST API ![App-Buil-State](https://img.shields.io/badge/build-success-brightgreen.svg)
 
 My Event is an application to manage musical events (proposed by _**ADEO Services**_ for _**technical tests** _).
 My Event is simple RESTful web service using Spring and Java. This web service provides an in-memory musical events management service, with the capability to :
@@ -6,8 +6,6 @@ My Event is simple RESTful web service using Spring and Java. This web service p
 - Delete a musical events and their relationships in the system.
 - Create or Update musical events information in the system.
 - Retrieve a filtered list (one band has a member with the name matching the given pattern) of musical events in the system.
-
-![](https://img.shields.io/badge/build-success-brightgreen.svg)
 
 ## Technical stack
 
@@ -37,7 +35,7 @@ spring:
     platform: hsql
     url: jdbc:hsqldb:mem:eventdb;DB_CLOSE_DELAY=-1 
     username: sa
-    password: ""
+    password: sa
   jpa:
     database: hsql
     showSql: true
