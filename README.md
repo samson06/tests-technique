@@ -22,8 +22,10 @@ For the Front-end, the user interface allows to :
 ![](https://img.shields.io/badge/HSQLDB-✓-blue.svg)
 ![](https://img.shields.io/badge/Angular_JS-✓-blue.svg)
 
-* This is a maven project.
-* It uses HSQLDB as an in-memory database.
+- This is a maven project.
+- It uses HSQLDB as an in-memory database.
+- It uses Angular JS for Front-End usr interface.
+- It uses JPA/Hibernate for ORM and DAO concepts.
 
 ### Change 'My Event' configuration
 Edit the configuration in the file [application.yml](/tests-technique/src/main/resources/application.yml)
