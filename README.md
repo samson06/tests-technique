@@ -63,16 +63,12 @@ logging:
 
 ## Identified Issues Analysis :
 
-```
-Please keep track (notes) of how you analysed and fixed the issues to help us 
-understand the steps during the interview
-```
-**1. Adding review does not work**
+_1. Adding review does not work_
 - No entry point for the user interface to trigger the update action.
 - In the controller the called function for updating is empty.
 - In the service and DAO layers, no functions either to search for it by identifier or to save (persistence or update) data.
 
-**2. Using the delete button works but elements comes back when i refresh the page** 
+_2. Using the delete button works but elements comes back when i refresh the page_ 
 - 
 ## Identified Issues Solutions :
 
