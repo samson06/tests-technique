@@ -2,10 +2,12 @@ package adeo.leroymerlin.cdp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.context.annotation.Import;
+
+import adeo.leroymerlin.cdp.config.MyEvenBaseConfig;
 
 @SpringBootApplication
-@EnableTransactionManagement
+@Import(MyEvenBaseConfig.class)
 public class AdeoLeroyMerlinCDPRecruitmentApplication {
 
 	public static void main(String[] args) {

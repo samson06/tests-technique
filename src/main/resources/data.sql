@@ -1,4 +1,9 @@
--- Insertion dans la table BAND 
+/*  -----------------------------
+	-- Manage cinema Event DML : 
+  -------------------------------
+*/
+
+-- Populate  BAND table
 INSERT INTO BAND(ID, NAME) 
 VALUES 
 (1000, 'Pink Floyd'),
@@ -12,7 +17,7 @@ VALUES
 (1008, 'Sum41'),
 (1009, 'Off Spring');
 
--- Insertion dans la table MEMBER 
+-- Populate  MEMBER table
 INSERT INTO MEMBER(ID, NAME) 
 VALUES 
 (1001,'Queen Frankie Gross (Fania)'),
@@ -46,7 +51,7 @@ VALUES
 (1029,'Queen Annabel Hardy'),
 (1030,'Queen Yasmine Buckley');
 
--- Insertion dans la table BAND_MEMBERS 
+-- Populate  BAND_MEMBERS table 
 INSERT INTO BAND_MEMBERS(BAND_ID, MEMBERS_ID) 
 VALUES 
 (1000,1001),
@@ -80,7 +85,7 @@ VALUES
 (1009,1029),
 (1009,1030);
 
--- Insertion dans la table EVENT 
+-- Populate  EVENT table  
 INSERT INTO EVENT(ID, TITLE, IMG_URL) 
 VALUES 
 (1000, 'GrasPop Metal Meeting', 'img/1000.jpeg'),
@@ -89,7 +94,7 @@ VALUES
 (1003, 'Download Festival', 'img/1003.jpeg'),
 (1004, 'Motocultor', 'img/1004.jpeg');
 
--- Insertion dans la table EVENT_BANDS 
+-- Populate  EVENT_BANDS table  
 INSERT INTO EVENT_BANDS(EVENT_ID, BANDS_ID) 
 VALUES 
 (1000, 1000),

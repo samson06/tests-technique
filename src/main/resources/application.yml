@@ -7,11 +7,11 @@ spring:
     platform: hsql
     url: jdbc:hsqldb:mem:eventdb;DB_CLOSE_DELAY=-1 
     username: sa
-    password: ""
+    password: sa
   jpa:
-    show-sql: true
+    database: hsql
+    showSql: true
     hibernate:
-#      ddl-auto: ""
-      ddl-auto: validate      
+      ddlAuto: ""
     properties: 
       hibernate.format_sql: true #

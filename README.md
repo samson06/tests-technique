@@ -1,14 +1,17 @@
-# Java - Spring
+# My Event REST API
 
-## My Event
-
-* My Event is an application to manage musical events.
+My Event is an application to manage musical events (proposed by _**ADEO Services**_ for _**technical tests** _).
+My Event is simple RESTful web service using Spring and Java. This web service provides an in-memory musical events management service, with the capability to :
+- Retrieve a list of musical events and their relationships in the system.
+- Delete a musical events and their relationships in the system.
+- Create or Update musical events information in the system.
+- Retrieve a filtered list (one band has a member with the name matching the given pattern) of musical events in the system.
 
 ![](https://img.shields.io/badge/build-success-brightgreen.svg)
 
 ## Technical stack
 
-![](https://img.shields.io/badge/Java-✓-blue.svg)
+![](https://img.shields.io/badge/Java_8-✓-blue.svg)
 ![](https://img.shields.io/badge/Maven-✓-blue.svg)
 ![](https://img.shields.io/badge/Spring_boot-✓-blue.svg)
 ![](https://img.shields.io/badge/Jpa-✓-blue.svg)
@@ -21,6 +24,28 @@
 * It starts using this maven lifecycle ```mvn spring-boot:run``` or using the IDE
 * The user interface is available at [http://localhost:8086]
 * The API resources are available at [http://localhost:8086/api/] 
+
+### Change configuration
+Edit the configuration in the file [application.yml](/tests-technique/src/main/resources/application.yml)
+```
+server:
+  port: 8086
+  
+spring:
+  datasource:
+    driverClassName: org.hsqldb.jdbc.JDBCDriver
+    platform: hsql
+    url: jdbc:hsqldb:mem:eventdb;DB_CLOSE_DELAY=-1 
+    username: sa
+    password: ""
+  jpa:
+    database: hsql
+    showSql: true
+    hibernate:
+      ddlAuto: ""
+    properties: 
+      hibernate.format_sql: true #
+```
 
 ## Context
 
