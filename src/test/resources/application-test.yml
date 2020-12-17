@@ -6,9 +6,9 @@ spring:
   datasource:
     driverClassName: org.hsqldb.jdbc.JDBCDriver
     platform: hsql
-    url: jdbc:hsqldb:mem:eventdb;DB_CLOSE_DELAY=-1 
+    url: jdbc:hsqldb:mem:eventtestdb;DB_CLOSE_DELAY=-1 
     username: sa
-    password: sa
+    password: ""
   jpa:
     database: hsql
     showSql: true

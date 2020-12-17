@@ -11,6 +11,8 @@
  */	
 package adeo.leroymerlin.cdp;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,12 +34,33 @@ public final class MyEventTestsUtils
     public static final String BAND_NAME = "Metallica";
     public static final String EVENT_TITLE = "GrasPop Metal Meeting";
 
+    // Other Tests constants
+    public static final String TITLE_REPO_TEST = "Les Vieilles Charrues";
+    public static final String NAME_REPO_TEST = "AC/DC";
+    public static final String MEMBER_NAME_REPO_TEST = "Queen Kimberly Jacobs";
+    public static final String COMMENT = "Add Test Comment";
+    public static final String URL_PATTERN = "img/1000";
+
     /**
      * Private constructor for Utilities
      */
     private MyEventTestsUtils()
     {
         //
+    }
+
+    /**
+     * @param expected
+     * @param actual
+     */
+    public static void AssertAllEvent(final Event expected, final Event actual)
+    {
+        assertThat(actual.getId()).isEqualTo(expected.getId());
+        assertThat(actual.getTitle()).isEqualTo(expected.getTitle());
+        assertThat(actual.getComment()).isEqualTo(expected.getComment());
+        assertThat(actual.getImgUrl()).isEqualTo(expected.getImgUrl());
+        assertThat(actual.getNbStars()).isEqualTo(expected.getNbStars());
+        assertThat(actual.getBands()).isEqualTo(expected.getBands());
     }
 
     /**
@@ -98,7 +121,7 @@ public final class MyEventTestsUtils
         event.setTitle(pEventTitle);
         event.setImgUrl("img/1000.jpeg");
         event.setNbStars(5);
-        event.setComment("Add Test Comment");
+        event.setComment(COMMENT);
         event.setBands(pBands);
         return event;
     }

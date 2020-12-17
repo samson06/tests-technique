@@ -5,18 +5,24 @@ import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
+import adeo.leroymerlin.cdp.enumration.ErrorCodeEnum;
+import adeo.leroymerlin.cdp.error.MyEventCustomException;
 import adeo.leroymerlin.cdp.model.Event;
 import adeo.leroymerlin.cdp.repository.EventRepository;
 
 @Service
-public class EventService {
+public class EventService
+{
 
     private final EventRepository eventRepository;
 
     @Autowired
-    public EventService(EventRepository eventRepository) {
+    public EventService(EventRepository eventRepository)
+    {
         this.eventRepository = eventRepository;
     }
 
@@ -25,7 +31,8 @@ public class EventService {
      * 
      * @return list of all events in the system
      */
-    public List<Event> getEvents() {
+    public List<Event> getEvents()
+    {
         return eventRepository.findAllBy();
     }
 
@@ -34,7 +41,8 @@ public class EventService {
      * 
      * @param id musical event's Id.
      */
-    public void delete(Long id) {
+    public void delete(Long id)
+    {
         eventRepository.delete(id);
     }
 
@@ -46,7 +54,16 @@ public class EventService {
      */
     public Event createEvent(final Event pEvent)
     {
-        return this.eventRepository.save(pEvent);
+        try
+        {
+            final Event event = this.eventRepository.save(pEvent);
+            Assert.notNull(event);
+            return event;
+        }
+        catch (Exception e)
+        {
+            throw new MyEventCustomException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorCodeEnum.CREATE_EVENT_ERROR.name(), e.getMessage());
+        }
     }
 
     /**
@@ -57,10 +74,17 @@ public class EventService {
      */
     public Optional<Event> findEventById(final Long pId)
     {
-        return Optional.of(this.eventRepository.findOneById(pId))//
-        .filter(Objects::nonNull)//
-        .filter(Optional::isPresent)//
-        .map(Optional::get);//
+        try
+        {
+            return Optional.of(this.eventRepository.findOneById(pId))//
+            .filter(Objects::nonNull)//
+            .filter(Optional::isPresent)//
+            .map(Optional::get);//
+        }
+        catch (Exception e)
+        {
+            throw new MyEventCustomException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorCodeEnum.FIND_EVENT_ERROR.name(), e.getMessage());
+        }
     }
 
     /**
@@ -71,17 +95,25 @@ public class EventService {
      */
     public void updateEvent(final Long pId, final Event pEvent)
     {
-        this.findEventById(pId).ifPresent(event -> {
-            pEvent.setId(event.getId());
-            this.createEvent(pEvent);
-        });
+        try
+        {
+            this.findEventById(pId).ifPresent(event -> {
+                pEvent.setId(event.getId());
+                this.createEvent(pEvent);
+            });
+        }
+        catch (Exception e)
+        {
+            throw new MyEventCustomException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorCodeEnum.UPDATE_EVENT_ERROR.name(), e.getMessage());
+        }
     }
 
     /**
      * @param query
      * @return
      */
-    public List<Event> getFilteredEvents(String query) {
+    public List<Event> getFilteredEvents(String query)
+    {
         List<Event> events = eventRepository.findAllBy();
         // Filter the events list in pure JAVA here
 

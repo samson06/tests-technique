@@ -8,7 +8,7 @@ spring:
     platform: hsql
     url: jdbc:hsqldb:mem:eventdb;DB_CLOSE_DELAY=-1 
     username: sa
-    password: sa
+    password: ""
   jpa:
     database: hsql
     showSql: true

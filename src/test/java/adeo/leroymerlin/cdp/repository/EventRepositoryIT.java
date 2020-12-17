@@ -16,45 +16,43 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import adeo.leroymerlin.cdp.MyEventTestsUtils;
+import adeo.leroymerlin.cdp.config.MyEventBaseConfig;
 import adeo.leroymerlin.cdp.model.Band;
 import adeo.leroymerlin.cdp.model.Event;
 import adeo.leroymerlin.cdp.model.Member;
 import adeo.leroymerlin.cdp.util.MyEventUtils;
 
 /**
- * Unit Tests class for {@link EventRepository}
+ * Integration Tests Class for {@link EventRepository}
  * 
  * @author Vincent Otchoun
  */
 @RunWith(SpringRunner.class)
-@DataJpaTest
-public class EventRepositoryTest
+@TestPropertySource(value = { "classpath:application-test.yml" })
+@ContextConfiguration(name = "eventRepositoryIT", classes = { MyEventBaseConfig.class })
+@ActiveProfiles("test")
+@Sql(scripts = { "classpath:scripts/schema.sql", "classpath:scripts/data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+@SpringBootTest
+@Transactional
+public class EventRepositoryIT
 {
     //
     @Autowired
-    private TestEntityManager entityManager;
-
-    @Autowired
     private EventRepository eventRepository;
-
-    private Event eventToSaved = MyEventTestsUtils.buildTestEvent();
-
-    @Before
-    public void setup()
-    {
-        entityManager.persist(eventToSaved);// we save the event object at the start of each test
-        entityManager.flush();
-    }
 
     /**
      * Test method for {@link adeo.leroymerlin.cdp.repository.EventRepository#findAllBy()}.
@@ -62,8 +60,7 @@ public class EventRepositoryTest
     @Test
     public void testFindAllBy()
     {
-        assertThat(this.eventRepository.findAllBy().size()).isEqualTo(6); // we have 5 event records in the data.sql initialization file and an event object added during the test
-                                                                          // setup
+        assertThat(this.eventRepository.findAllBy().size()).isEqualTo(5);// we have 5 event records in the data.sql initialization file
     }
 
     /**
@@ -76,8 +73,7 @@ public class EventRepositoryTest
         final Event savedEvent = this.eventRepository.save(eventToSaved);
 
         assertThat(savedEvent).isNotNull();
-        assertThat(this.eventRepository.findAllBy().size()).isEqualTo(7); // we have 5 event records in the data.sql initialization file and an event object added during the test
-                                                                          // setup
+        assertThat(this.eventRepository.findAllBy().size()).isEqualTo(6); // we have 5 event records in the data.sql initialization file and add one
     }
 
 
@@ -104,8 +100,7 @@ public class EventRepositoryTest
 
         this.eventRepository.delete(savedEvent.getId());
 
-        assertThat(this.eventRepository.findAllBy().size()).isEqualTo(6); // we have 5 event records in the data.sql initialization file and an event object added during the test
-                                                                          // setup
+        assertThat(this.eventRepository.findAllBy().size()).isEqualTo(5); // we have 5 event records in the data.sql initialization file
     }
 
     @Test(expected = InvalidDataAccessApiUsageException.class)
