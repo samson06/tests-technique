@@ -43,14 +43,14 @@ spring:
     platform: hsql
     url: jdbc:hsqldb:mem:eventdb;DB_CLOSE_DELAY=-1 
     username: sa
-    password: sa
+    password: ""
   jpa:
     database: hsql
-    showSql: true
+    showSql: true # only in developement mode, not in prod.
     hibernate:
       ddlAuto: ""
     properties: 
-      hibernate.format_sql: true #
+      hibernate.format_sql: true # only in developement mode, not in prod.
 # Logger configuration
 logging:
   config: classpath:logback-spring.xml
@@ -150,8 +150,7 @@ The tests were carried out during the realization with classic test tools.
 - JUnit 4
 - Spring Framework Tests tools with
 	- spring-boot-starter-test
-	- Assertions with assert-j
-	-...
+	- Assertions with Assert-J,…
 - JaCoCo maven plugin (with surefire and failsafe plugin) to produce the code coverage report.
 - Postman for testing API
 
