@@ -60,6 +60,13 @@ public class EventControllerTest
 {
     //
     private static final String URL = "http://localhost:";// url of the REST server. This url can be that of a remote server.
+    private static final String ID_PARAM = "id";
+    private static final String QUERY_PARAM = "query";
+    private static final String WA_PATTERN = "Wa";
+    private static final String LE_PATTERN = "le";
+    private static final String ID_API_URL = "/api/events/{id}";
+    private static final String QUERY_API_URL = "/api/events/search/{query}";
+    private static final String ALL_API_URL = "/api/events/";
 
     //
     @Autowired
@@ -84,11 +91,12 @@ public class EventControllerTest
     @Test
     public void testFindEvents() throws Exception
     {
-        final ResponseEntity<Object> responseEntity = this.restTemplate.getForEntity(this.getURLWithPort("/api/events/"), Object.class);
+        final ResponseEntity<Object> responseEntity = this.restTemplate.getForEntity(this.getURLWithPort(ALL_API_URL), Object.class);
 
         assertThat(responseEntity).isNotNull();
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
 
+        @SuppressWarnings("unchecked")
         final List<Event> events = (List<Event>) responseEntity.getBody();
         assertThat(events).isNotNull();
         assertThat(events.size()).isEqualTo(5);
@@ -110,8 +118,8 @@ public class EventControllerTest
     public void testDeleteEvent()
     {
         final Map<String, Long> variables = new HashMap<>(1);
-        variables.put("id", MyEventTestsUtils.EXIST_ID);
-        final ResponseEntity<Void> responseEntity = this.restTemplate.exchange(this.getURLWithPort("/api/events/{id}"), HttpMethod.DELETE, null, Void.class, variables);
+        variables.put(ID_PARAM, MyEventTestsUtils.EXIST_ID);
+        final ResponseEntity<Void> responseEntity = this.restTemplate.exchange(this.getURLWithPort(ID_API_URL), HttpMethod.DELETE, null, Void.class, variables);
 
         assertThat(responseEntity).isNotNull();
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
@@ -121,7 +129,7 @@ public class EventControllerTest
     public void testDeleteEvent_BadVariable()
     {
         final Map<String, Long> variables = new HashMap<>(1);
-        variables.put("id", MyEventTestsUtils.EXIST_ID);
+        variables.put(ID_PARAM, MyEventTestsUtils.EXIST_ID);
         final ResponseEntity<Void> responseEntity = this.restTemplate.exchange(this.getURLWithPort("/api/events/{idBad}"), HttpMethod.DELETE, null, Void.class, variables);
 
         assertThat(responseEntity).isNull();
@@ -131,9 +139,9 @@ public class EventControllerTest
     public void testDeleteEvent_NotExist()
     {
         final Map<String, Long> variables = new HashMap<>(1);
-        variables.put("id", MyEventTestsUtils.NON_EXIST_ID);
+        variables.put(ID_PARAM, MyEventTestsUtils.NON_EXIST_ID);
 
-        final ResponseEntity<Void> responseEntity = this.restTemplate.exchange(this.getURLWithPort("/api/events/{id}"), HttpMethod.DELETE, null, Void.class, variables);
+        final ResponseEntity<Void> responseEntity = this.restTemplate.exchange(this.getURLWithPort(ID_API_URL), HttpMethod.DELETE, null, Void.class, variables);
 
         assertThat(responseEntity).isNotNull();
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
@@ -147,18 +155,35 @@ public class EventControllerTest
     public void testUpdateEvent()
     {
         final HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON); // media type of teh request body
+        headers.setContentType(MediaType.APPLICATION_JSON); // media type of the request body
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));// media type to response with
 
         final HttpEntity<Event> requestEntity = new HttpEntity<Event>(MyEventTestsUtils.buildTestEvent(), headers);
 
         final Map<String, Long> variables = new HashMap<>(1);
-        variables.put("id", MyEventTestsUtils.EXIST_ID);
+        variables.put(ID_PARAM, MyEventTestsUtils.EXIST_ID);
 
-        final ResponseEntity<Void> responseEntity = this.restTemplate.exchange(this.getURLWithPort("/api/events/{id}"), HttpMethod.PUT, requestEntity, Void.class, variables);
+        final ResponseEntity<Void> responseEntity = this.restTemplate.exchange(this.getURLWithPort(ID_API_URL), HttpMethod.PUT, requestEntity, Void.class, variables);
 
         assertThat(responseEntity).isNotNull();
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
+    }
+
+    @Test
+    public void testUpdateEvent_NotExistId()
+    {
+
+        final HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON); // media type of the request body
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));// media type to response with
+
+        final Map<String, Long> variables = new HashMap<>(1);
+        variables.put(ID_PARAM, MyEventTestsUtils.NON_EXIST_ID);
+
+        final ResponseEntity<Void> responseEntity = this.restTemplate.exchange(this.getURLWithPort(ID_API_URL), HttpMethod.PUT, null, Void.class, variables);
+
+        assertThat(responseEntity).isNotNull();
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
@@ -173,15 +198,15 @@ public class EventControllerTest
         final Event eventToUpdated = optional.get();
 
         final HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON); // media type of teh request body
+        headers.setContentType(MediaType.APPLICATION_JSON); // media type of the request body
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));// media type to response with
 
         final HttpEntity<Event> requestEntity = new HttpEntity<Event>(eventToUpdated, headers);
 
         final Map<String, Long> variables = new HashMap<>(1);
-        variables.put("id", null);
+        variables.put(ID_PARAM, null);
 
-        final ResponseEntity<Void> responseEntity = this.restTemplate.exchange(this.getURLWithPort("/api/events/{id}"), HttpMethod.PUT, requestEntity, Void.class, variables);
+        final ResponseEntity<Void> responseEntity = this.restTemplate.exchange(this.getURLWithPort(ID_API_URL), HttpMethod.PUT, requestEntity, Void.class, variables);
 
         assertThat(responseEntity).isNotNull();
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HttpStatus.METHOD_NOT_ALLOWED.value());
@@ -196,18 +221,16 @@ public class EventControllerTest
         assertThat(optional).isNotNull();
         assertThat(optional.isPresent()).isTrue();
 
-        // final Event eventToUpdated = optional.get();
-
         final HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON); // media type of teh request body
+        headers.setContentType(MediaType.APPLICATION_JSON); // media type of the request body
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));// media type to response with
 
         final HttpEntity<Event> requestEntity = new HttpEntity<Event>(null, headers);
 
         final Map<String, Long> variables = new HashMap<>(1);
-        variables.put("id", MyEventTestsUtils.EXIST_ID);
+        variables.put(ID_PARAM, MyEventTestsUtils.EXIST_ID);
 
-        final ResponseEntity<Void> responseEntity = this.restTemplate.exchange(this.getURLWithPort("/api/events/{id}"), HttpMethod.PUT, requestEntity, Void.class, variables);
+        final ResponseEntity<Void> responseEntity = this.restTemplate.exchange(this.getURLWithPort(ID_API_URL), HttpMethod.PUT, requestEntity, Void.class, variables);
 
         assertThat(responseEntity).isNotNull();
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HttpStatus.BAD_REQUEST.value());
@@ -220,14 +243,15 @@ public class EventControllerTest
     public void testFindEventsString()
     {
         final Map<String, Long> variables = new HashMap<>(1);
-        variables.put("query", MyEventTestsUtils.EXIST_ID);
+        variables.put(QUERY_PARAM, MyEventTestsUtils.EXIST_ID);
 
         //
-        final ResponseEntity<Object> responseEntity = this.restTemplate.exchange(this.getURLWithPort("/api/events/search/{query}"), HttpMethod.GET, null, Object.class, variables);
+        final ResponseEntity<Object> responseEntity = this.restTemplate.exchange(this.getURLWithPort(QUERY_API_URL), HttpMethod.GET, null, Object.class, variables);
 
         assertThat(responseEntity).isNotNull();
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
 
+        @SuppressWarnings("unchecked")
         final List<Event> events = (List<Event>) responseEntity.getBody();
         assertThat(events).isNotNull();
         assertThat(events.size()).isEqualTo(0);
@@ -237,10 +261,10 @@ public class EventControllerTest
     public void testFindEventsString_Query_Null()
     {
         final Map<String, String> variables = new HashMap<>(1);
-        variables.put("query", null);
+        variables.put(QUERY_PARAM, null);
 
         //
-        final ResponseEntity<Object> responseEntity = this.restTemplate.exchange(this.getURLWithPort("/api/events/search/{query}"), HttpMethod.GET, null, Object.class, variables);
+        final ResponseEntity<Object> responseEntity = this.restTemplate.exchange(this.getURLWithPort(QUERY_API_URL), HttpMethod.GET, null, Object.class, variables);
 
         assertThat(responseEntity).isNotNull();
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HttpStatus.METHOD_NOT_ALLOWED.value());
@@ -253,10 +277,10 @@ public class EventControllerTest
     public void testFindEventsString_Query_Empty()
     {
         final Map<String, String> variables = new HashMap<>(1);
-        variables.put("query", "");
+        variables.put(QUERY_PARAM, "");
 
         //
-        final ResponseEntity<Object> responseEntity = this.restTemplate.exchange(this.getURLWithPort("/api/events/search/{query}"), HttpMethod.GET, null, Object.class, variables);
+        final ResponseEntity<Object> responseEntity = this.restTemplate.exchange(this.getURLWithPort(QUERY_API_URL), HttpMethod.GET, null, Object.class, variables);
 
         assertThat(responseEntity).isNotNull();
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HttpStatus.METHOD_NOT_ALLOWED.value());
@@ -269,10 +293,10 @@ public class EventControllerTest
     public void testFindEventsString_Query_Wa()
     {
         final Map<String, String> variables = new HashMap<>(1);
-        variables.put("query", "Wa");
+        variables.put(QUERY_PARAM, WA_PATTERN);
 
         //
-        final ResponseEntity<Object> responseEntity = this.restTemplate.exchange(this.getURLWithPort("/api/events/search/{query}"), HttpMethod.GET, null, Object.class, variables);
+        final ResponseEntity<Object> responseEntity = this.restTemplate.exchange(this.getURLWithPort(QUERY_API_URL), HttpMethod.GET, null, Object.class, variables);
 
         assertThat(responseEntity).isNotNull();
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
@@ -287,10 +311,10 @@ public class EventControllerTest
     public void testFindEventsString_Query_le()
     {
         final Map<String, String> variables = new HashMap<>(1);
-        variables.put("query", "le");
+        variables.put(QUERY_PARAM, LE_PATTERN);
 
         //
-        final ResponseEntity<Object> responseEntity = this.restTemplate.exchange(this.getURLWithPort("/api/events/search/{query}"), HttpMethod.GET, null, Object.class, variables);
+        final ResponseEntity<Object> responseEntity = this.restTemplate.exchange(this.getURLWithPort(QUERY_API_URL), HttpMethod.GET, null, Object.class, variables);
 
         assertThat(responseEntity).isNotNull();
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());

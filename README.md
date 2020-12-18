@@ -6,7 +6,7 @@ This web service provides an in-memory musical events management **Back-End** se
 - Get a list of musical events and their relationships in the system.
 - Delete a musical events and their relationships in the system.
 - Update musical events information in the system.
-- Get a filtered list (one band has a member with the name matching the given pattern) of musical events in the system.
+- Get a filtered list (one band has a member with the name matching the given pattern) of musical events.
 - Find a musical events by her technical identifier.
 - Save or persist a musical events information .
 
@@ -62,7 +62,18 @@ logging:
 - The API resources are available at : _http://localhost:<server.port>/api/_ 
 
 
-## Identified Issues Analysis :
+## REST Endpoints
+The following REST endpoints are available upon deployment of the event management system :
+
+|HTTP Verb|URL|Description|Status Codes|
+|---|---|---|---|
+|`GET`|_http://localhost:<server.port>/api/events/_|Obtains a list of all existing musical events|`200 OK`|
+|`GET`|_http://localhost:<server.port>/api/events/search/{query}_|Obtains event filtered list to display|<ul><li>`200 OK` if event exists</li><li>`empty list` if the event does not exist</li></ul>|
+|`DELETE`|_http://localhost:<server.port>/api/events/{id}_|Deletes an existing event that corresponds to Id|<ul><li>`200 OK` if the event was successfully deleted</li><li>`500 Internal Server Error` if the event does not exist</li></ul>|
+|`PUT`|_http://localhost:<server.port>/api/events/{id}_|Updated an existing event with the data contained in the request body|<ul><li>`200 OK` if the event was successfully updated</li><li>`400 Bad Request` with null event or not exist Id</li><li>`405 Method Not Allowed` with null query pattern</li></ul> 
+
+
+## Issues Analysis :
 
 _1. Adding review does not work_
 - No entry point for the user interface to trigger the update action.
