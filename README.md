@@ -158,10 +158,11 @@ The tests were carried out during the realization with classic test tools.
 - Functional Tests
 
 ### Tests Tools
-- JUnit 4
-- Spring Framework Tests tools with
-	- spring-boot-starter-test
-	- Assertions with Assert-J,…
+- Spring Framework Tests tools (_spring-boot-starter-test_) which embedded :
+	- _spring-test, spring-boot-test, spring-boot-test-autoconfigure_
+	- _JUnit 4_
+	- _Mockito_
+	- _Assertions with Assert-J_,…
 - JaCoCo maven plugin (with surefire and failsafe plugin) to produce the code coverage report.
 - Postman for testing API
 
