@@ -13,8 +13,14 @@ package adeo.leroymerlin.cdp;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import adeo.leroymerlin.cdp.model.Band;
 import adeo.leroymerlin.cdp.model.Event;
@@ -47,6 +53,53 @@ public final class MyEventTestsUtils
     private MyEventTestsUtils()
     {
         //
+    }
+
+    /**
+     * Convert Set to List.
+     * 
+     * @param <T>                  element type.
+     * @param pObjectListToBeBound a set to be converted.
+     * @return a list of element otherwise empty list.
+     */
+    public static <T> List<T> convertSetToList(final Set<T> pObjectSetToBeBound)
+    {
+        return Optional.ofNullable(pObjectSetToBeBound)//
+        .orElseGet(Collections::emptySet)//
+        .stream()//
+        .filter(Objects::nonNull)//
+        .collect(Collectors.toList());
+    }
+
+    /**
+     * @return
+     */
+    public static Function<String, String> getFunctionUpperCase()
+    {
+        return new Function<String, String>()
+        {
+            @Override
+            public String apply(String t)
+            {
+                return t.toUpperCase();
+            }
+        };
+    }
+
+    /**
+     * @param pQuery
+     * @return
+     */
+    public static Function<String, Boolean> getFunctionMatchQuery(final String pQuery)
+    {
+        return new Function<String, Boolean>()
+        {
+            @Override
+            public Boolean apply(String t)
+            {
+                return t.contains(pQuery);
+            }
+        };
     }
 
     /**

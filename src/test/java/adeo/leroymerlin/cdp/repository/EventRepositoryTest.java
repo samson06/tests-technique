@@ -29,7 +29,6 @@ import adeo.leroymerlin.cdp.MyEventTestsUtils;
 import adeo.leroymerlin.cdp.model.Band;
 import adeo.leroymerlin.cdp.model.Event;
 import adeo.leroymerlin.cdp.model.Member;
-import adeo.leroymerlin.cdp.util.MyEventUtils;
 
 /**
  * Unit Tests class for {@link EventRepository}
@@ -130,7 +129,7 @@ public class EventRepositoryTest
         final Event event = optional.get();
 
         // Get Event Band List
-        final List<Band> bands = MyEventUtils.convertSetToList(event.getBands());
+        final List<Band> bands = MyEventTestsUtils.convertSetToList(event.getBands());
 
         assertThat(event.getTitle()).isEqualTo(MyEventTestsUtils.TITLE_REPO_TEST);
         assertThat(event.getNbStars()).isNull();
@@ -140,7 +139,7 @@ public class EventRepositoryTest
         assertThat(bands.get(0).getName()).isEqualTo(MyEventTestsUtils.NAME_REPO_TEST); // 1006
 
         // Get Band Member List
-        final List<Member> members = MyEventUtils.convertSetToList(bands.get(0).getMembers());
+        final List<Member> members = MyEventTestsUtils.convertSetToList(bands.get(0).getMembers());
 
         assertThat(members).isNotNull();
         assertThat(members.size()).isEqualTo(4);

@@ -22,6 +22,16 @@
 		<angularjs.version>1.5.8</angularjs.version>
 		<font-awesome.version>4.6.3</font-awesome.version>
 		<angular-input-stars.version>1.6.3</angular-input-stars.version>
+		
+		<!--  Tests coverage report generation properties -->
+		<project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
+		<jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
+		<jacoco.utReportFolder>${project.build.directory}/jacoco/test</jacoco.utReportFolder>
+		<jacoco.utReportFile>${jacoco.utReportFolder}/test.exec</jacoco.utReportFile>
+		<jacoco.itReportFolder>${project.build.directory}/jacoco/integrationTest</jacoco.itReportFolder>
+		<jacoco.itReportFile>${jacoco.itReportFolder}/integrationTest.exec</jacoco.itReportFile>
+		<junit.utReportFolder>${project.testresult.directory}/test</junit.utReportFolder>
+		<junit.itReportFolder>${project.testresult.directory}/integrationTest</junit.itReportFolder>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -74,6 +84,121 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<!-- UNIT TESTS -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>${surefireArgLine}</argLine>
+					<skipTests>false</skipTests>
+					<classesDirectory>${project.build.outputDirectory}</classesDirectory>
+					<runOrder>alphabetical</runOrder>
+					<reportsDirectory>${junit.itReportFolder}</reportsDirectory>
+					<excludes>
+						<exclude>**/*IntegrationTest.java</exclude>
+						<exclude>**/*IT*</exclude>
+						<exclude>**/*IntTest*</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>unit-tests</id>
+						<phase>test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<!--  INTEGRATION TESTS -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<configuration>
+					<argLine>${surefireArgLine}</argLine>
+					<skipTests>false</skipTests>
+					<runOrder>alphabetical</runOrder>
+					<reportsDirectory>${junit.utReportFolder}</reportsDirectory>
+					<includes>
+						<include>**/*IntegrationTest.java</include>
+						<include>**/*IT*</include>
+						<include>**/*IntTest*</include>
+					</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>integration-tests</id>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<!-- JACOCO for Coverage -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco-maven-plugin.version}</version>
+					<!-- Exclude full package from test coverage -->
+					<configuration>
+						<excludes>
+							<exclude>adeo/leroymerlin/cdp/model**/*</exclude>
+							<exclude>adeo/leroymerlin/cdp/AdeoLeroyMerlinCDPRecruitmentApplication.class</exclude>
+						</excludes>
+					</configuration>			
+				<executions>
+					<execution>
+						<id>pre-unit-test</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+						<configuration>
+							<!-- Sets the path to the file which contains the execution data. -->
+							<destFile>${jacoco.utReportFile}</destFile>
+							<propertyName>surefireArgLine</propertyName>
+						</configuration>
+					</execution>
+					<!-- Ensures that the code coverage report for unit tests is created 
+						after unit tests have been run -->
+					<execution>
+						<id>post-unit-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration>
+							<dataFile>${jacoco.utReportFile}</dataFile>
+							<outputDirectory>${jacoco.utReportFolder}</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>pre-integration-test</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+						<configuration>
+							<propertyName>failsafeArgLine</propertyName>
+							<!-- Sets the path to the file which contains the execution data. -->
+							<destFile>${jacoco.itReportFile}</destFile>
+						</configuration>
+					</execution>
+					<execution>
+						<id>post-integration-test</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>report-integration</goal>
+						</goals>
+						<configuration>
+							<dataFile>${jacoco.itReportFile}</dataFile>
+							<outputDirectory>${jacoco.itReportFolder}</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>			
 		</plugins>
 	</build>
 </project>

@@ -1,14 +1,3 @@
-/*
- * ----------------------------------------------
- * Projet ou Module : tests-technique
- * Nom de la classe : ErrorCodeEnum.java
- * Date de création : 17 déc. 2020
- * Heure de création : 10:11:15
- * Package : adeo.leroymerlin.cdp.enumration
- * Auteur : Vincent Otchoun
- * Copyright © 2020 - All rights reserved.
- * ----------------------------------------------
- */	
 package adeo.leroymerlin.cdp.enumration;
 
 /**

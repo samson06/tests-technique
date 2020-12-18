@@ -3,6 +3,7 @@ package adeo.leroymerlin.cdp.service;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.util.Assert;
 
 import adeo.leroymerlin.cdp.enumration.ErrorCodeEnum;
 import adeo.leroymerlin.cdp.error.MyEventCustomException;
+import adeo.leroymerlin.cdp.model.Band;
 import adeo.leroymerlin.cdp.model.Event;
 import adeo.leroymerlin.cdp.repository.EventRepository;
 
@@ -54,6 +56,7 @@ public class EventService
      */
     public Event createEvent(final Event pEvent)
     {
+        // try to add new event record in yht system.
         try
         {
             final Event event = this.eventRepository.save(pEvent);
@@ -74,6 +77,7 @@ public class EventService
      */
     public Optional<Event> findEventById(final Long pId)
     {
+        // try to find event by Id on the system.
         try
         {
             return Optional.of(this.eventRepository.findOneById(pId))//
@@ -95,6 +99,7 @@ public class EventService
      */
     public void updateEvent(final Long pId, final Event pEvent)
     {
+        // try to update event by Id on the system.
         try
         {
             this.findEventById(pId).ifPresent(event -> {
@@ -109,7 +114,9 @@ public class EventService
     }
 
     /**
-     * @param query
+     * Get filtered event list with member name match given query.
+     * 
+     * @param query the given query pattern.
      * @return
      */
     public List<Event> getFilteredEvents(String query)
@@ -117,6 +124,18 @@ public class EventService
         List<Event> events = eventRepository.findAllBy();
         // Filter the events list in pure JAVA here
 
-        return events;
+        final List<Event> filteredList = events.stream()//
+        .filter(event -> event.getBands().stream() // Get event Set<Band>
+        .map(Band::getMembers) // Set<Member> stream get
+        .filter(Objects::nonNull)// filter non null member for Set
+        .findAny()// // Search
+        .get()// // member Set get
+        .stream()//
+        .filter(Objects::nonNull)// filter non null member for Stream
+        .anyMatch(member -> member.getName().contains(query))// member with the name matching the given pattern
+        )//
+        .collect(Collectors.toList());
+
+        return filteredList;
     }
 }

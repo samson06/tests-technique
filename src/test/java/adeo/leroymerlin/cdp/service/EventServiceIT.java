@@ -35,7 +35,6 @@ import adeo.leroymerlin.cdp.error.MyEventCustomException;
 import adeo.leroymerlin.cdp.model.Band;
 import adeo.leroymerlin.cdp.model.Event;
 import adeo.leroymerlin.cdp.model.Member;
-import adeo.leroymerlin.cdp.util.MyEventUtils;
 
 /**
  * Integration Tests Class for {@link EventService}
@@ -62,6 +61,7 @@ public class EventServiceIT
     public void testGetEvents()
     {
         final List<Event> resultEvents = this.eventService.getEvents();
+
         assertThat(resultEvents).isNotNull();
         assertThat(resultEvents.size()).isEqualTo(5); // we have 5 event records in the data.sql initialization file
     }
@@ -98,7 +98,7 @@ public class EventServiceIT
 
         assertThat(savedEvent).isNotNull();
         assertThat(this.eventService.getEvents().size()).isEqualTo(6); // we have 5 event records in the data.sql initialization file and add one
-        assertThat(MyEventUtils.convertSetToList(this.eventService.getEvents().get(5).getBands()).get(0).getMembers()).isNull();
+        assertThat(MyEventTestsUtils.convertSetToList(this.eventService.getEvents().get(5).getBands()).get(0).getMembers()).isNull();
     }
 
     @Test(expected = MyEventCustomException.class)
@@ -149,7 +149,7 @@ public class EventServiceIT
         final Event event = optional.get();
 
         // Get Event Band List
-        final List<Band> bands = MyEventUtils.convertSetToList(event.getBands());
+        final List<Band> bands = MyEventTestsUtils.convertSetToList(event.getBands());
 
         assertThat(event.getTitle()).isEqualTo(MyEventTestsUtils.TITLE_REPO_TEST);
         assertThat(event.getNbStars()).isNull();
@@ -159,7 +159,7 @@ public class EventServiceIT
         assertThat(bands.get(0).getName()).isEqualTo(MyEventTestsUtils.NAME_REPO_TEST); // 1006
 
         // Get Band Member List
-        final List<Member> members = MyEventUtils.convertSetToList(bands.get(0).getMembers());
+        final List<Member> members = MyEventTestsUtils.convertSetToList(bands.get(0).getMembers());
 
         assertThat(members).isNotNull();
         assertThat(members.size()).isEqualTo(4);
@@ -205,7 +205,7 @@ public class EventServiceIT
         this.eventService.updateEvent(event.getId(), eventToUpdated);
 
         // Get Event Band List
-        final List<Band> bands = MyEventUtils.convertSetToList(eventToUpdated.getBands());
+        final List<Band> bands = MyEventTestsUtils.convertSetToList(eventToUpdated.getBands());
 
         assertThat(eventToUpdated.getTitle()).isEqualTo(MyEventTestsUtils.EVENT_TITLE);
         assertThat(eventToUpdated.getNbStars()).isEqualTo(5);
@@ -216,7 +216,7 @@ public class EventServiceIT
         assertThat(bands.get(0).getName()).isEqualTo(MyEventTestsUtils.BAND_NAME);
 
         // Get Band Member List
-        final List<Member> members = MyEventUtils.convertSetToList(bands.get(0).getMembers());
+        final List<Member> members = MyEventTestsUtils.convertSetToList(bands.get(0).getMembers());
 
         assertThat(members).isNotNull();
         assertThat(members.size()).isEqualTo(1);
@@ -241,7 +241,7 @@ public class EventServiceIT
         this.eventService.updateEvent(event.getId(), eventToUpdated);
 
         // Get Event Band List
-        final List<Band> bands = MyEventUtils.convertSetToList(eventToUpdated.getBands());
+        final List<Band> bands = MyEventTestsUtils.convertSetToList(eventToUpdated.getBands());
 
         assertThat(eventToUpdated.getTitle()).isEqualTo(MyEventTestsUtils.EVENT_TITLE);
         assertThat(eventToUpdated.getNbStars()).isEqualTo(5);
@@ -269,7 +269,7 @@ public class EventServiceIT
         this.eventService.updateEvent(event.getId(), eventToUpdated);
 
         // Get Event Band List
-        final List<Band> bands = MyEventUtils.convertSetToList(eventToUpdated.getBands());
+        final List<Band> bands = MyEventTestsUtils.convertSetToList(eventToUpdated.getBands());
 
         assertThat(eventToUpdated.getTitle()).isEqualTo(MyEventTestsUtils.EVENT_TITLE);
         assertThat(eventToUpdated.getNbStars()).isEqualTo(5);
@@ -298,7 +298,7 @@ public class EventServiceIT
         this.eventService.updateEvent(event.getId(), eventToUpdated);
 
         // Get Event Band List
-        final List<Band> bands = MyEventUtils.convertSetToList(eventToUpdated.getBands());
+        final List<Band> bands = MyEventTestsUtils.convertSetToList(eventToUpdated.getBands());
 
         assertThat(eventToUpdated.getTitle()).isEqualTo(MyEventTestsUtils.EVENT_TITLE);
         assertThat(eventToUpdated.getNbStars()).isEqualTo(5);
@@ -309,7 +309,7 @@ public class EventServiceIT
         assertThat(bands.get(0).getName()).isEqualTo(MyEventTestsUtils.BAND_NAME);
 
         // Get Band Member List
-        final List<Member> members = MyEventUtils.convertSetToList(bands.get(0).getMembers());
+        final List<Member> members = MyEventTestsUtils.convertSetToList(bands.get(0).getMembers());
 
         assertThat(members).isNotNull();
         assertThat(members.size()).isEqualTo(0);
@@ -333,7 +333,7 @@ public class EventServiceIT
         this.eventService.updateEvent(event.getId(), eventToUpdated);
 
         // Get Event Band List
-        final List<Band> bands = MyEventUtils.convertSetToList(eventToUpdated.getBands());
+        final List<Band> bands = MyEventTestsUtils.convertSetToList(eventToUpdated.getBands());
 
         assertThat(eventToUpdated.getTitle()).isEqualTo(MyEventTestsUtils.EVENT_TITLE);
         assertThat(eventToUpdated.getNbStars()).isEqualTo(5);
@@ -344,7 +344,7 @@ public class EventServiceIT
         assertThat(bands.get(0).getName()).isEqualTo(MyEventTestsUtils.BAND_NAME);
 
         // Get Band Member List
-        final List<Member> members = MyEventUtils.convertSetToList(bands.get(0).getMembers());
+        final List<Member> members = MyEventTestsUtils.convertSetToList(bands.get(0).getMembers());
 
         assertThat(members).isNotNull();
         assertThat(members.size()).isEqualTo(0);
@@ -374,8 +374,52 @@ public class EventServiceIT
     @Test
     public void testGetFilteredEvents()
     {
-        // XXX: MAJ UNE FOIS LA FONCTION COMPLETEE
+        final List<Event> events = this.eventService.getFilteredEvents("Wa");
 
+        assertThat(events).isNotNull();
+        assertThat(events.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void testGetFilteredEvents_Query_le()
+    {
+        final List<Event> events = this.eventService.getFilteredEvents("le");
+
+        assertThat(events).isNotNull();
+        assertThat(events.size()).isEqualTo(3);
+    }
+
+    @Test
+    public void testGetFilteredEvents_Query_empty()
+    {
+        final List<Event> events = this.eventService.getFilteredEvents("");
+
+        assertThat(events).isNotNull();
+        assertThat(events.size()).isEqualTo(5);
+    }
+
+    @Test
+    public void testGetFilteredEvents_Query_space()
+    {
+
+        final List<Event> events = this.eventService.getFilteredEvents(" ");
+
+        assertThat(events).isNotNull();
+        assertThat(events.size()).isEqualTo(5);
+    }
+
+    @Test
+    public void testGetFilteredEvents_Query_azerty()
+    {
+
+        final List<Event> events = this.eventService.getFilteredEvents("aerty");
+
+        assertThat(events).isNotNull();
+        assertThat(events.size()).isEqualTo(0);
+    }
+
+    public void testGetFilteredEvents_Query_Null()
+    {
         final List<Event> events = this.eventService.getFilteredEvents(null);
 
         assertThat(events).isNotNull();

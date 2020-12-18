@@ -24,6 +24,14 @@ public class MyEventCustomException extends RuntimeException
     private String message;
 
     /**
+     * Default constructor.
+     */
+    public MyEventCustomException()
+    {
+        // TODO Auto-generated constructor stub
+    }
+
+    /**
      * Constructor with status message and error code.
      * 
      * @param status    error http status code.

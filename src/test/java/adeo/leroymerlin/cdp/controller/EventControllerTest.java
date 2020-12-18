@@ -56,7 +56,6 @@ import adeo.leroymerlin.cdp.service.EventService;
 @ContextConfiguration(name = "eventControllerTest", classes = { MyEventBaseConfig.class, EventService.class, EventController.class })
 @ActiveProfiles("test")
 @Sql(scripts = { "classpath:scripts/schema.sql", "classpath:scripts/data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-// @Transactional
 public class EventControllerTest
 {
     //
@@ -71,8 +70,6 @@ public class EventControllerTest
 
     @LocalServerPort
     private int port; // allows to use the local port of the server, otherwise a "Connection refused" error
-
-    private Map<String, Event> map = new HashMap<>();
 
     private String getURLWithPort(String uri)
     {
@@ -174,7 +171,6 @@ public class EventControllerTest
         assertThat(optional.isPresent()).isTrue();
 
         final Event eventToUpdated = optional.get();
-        this.map.put("EVENT", eventToUpdated);
 
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON); // media type of teh request body
@@ -223,8 +219,6 @@ public class EventControllerTest
     @Test
     public void testFindEventsString()
     {
-        // XXX: A METTRE A JOUR
-
         final Map<String, Long> variables = new HashMap<>(1);
         variables.put("query", MyEventTestsUtils.EXIST_ID);
 
@@ -236,6 +230,74 @@ public class EventControllerTest
 
         final List<Event> events = (List<Event>) responseEntity.getBody();
         assertThat(events).isNotNull();
-        assertThat(events.size()).isEqualTo(5);
+        assertThat(events.size()).isEqualTo(0);
+    }
+
+    @Test
+    public void testFindEventsString_Query_Null()
+    {
+        final Map<String, String> variables = new HashMap<>(1);
+        variables.put("query", null);
+
+        //
+        final ResponseEntity<Object> responseEntity = this.restTemplate.exchange(this.getURLWithPort("/api/events/search/{query}"), HttpMethod.GET, null, Object.class, variables);
+
+        assertThat(responseEntity).isNotNull();
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HttpStatus.METHOD_NOT_ALLOWED.value());
+
+        assertThat(responseEntity.getBody().toString()).isNotNull();
+        assertThat(responseEntity.getBody()).isNotNull();
+    }
+
+    @Test
+    public void testFindEventsString_Query_Empty()
+    {
+        final Map<String, String> variables = new HashMap<>(1);
+        variables.put("query", "");
+
+        //
+        final ResponseEntity<Object> responseEntity = this.restTemplate.exchange(this.getURLWithPort("/api/events/search/{query}"), HttpMethod.GET, null, Object.class, variables);
+
+        assertThat(responseEntity).isNotNull();
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HttpStatus.METHOD_NOT_ALLOWED.value());
+
+        assertThat(responseEntity.getBody().toString()).isNotNull();
+        assertThat(responseEntity.getBody()).isNotNull();
+    }
+
+    @Test
+    public void testFindEventsString_Query_Wa()
+    {
+        final Map<String, String> variables = new HashMap<>(1);
+        variables.put("query", "Wa");
+
+        //
+        final ResponseEntity<Object> responseEntity = this.restTemplate.exchange(this.getURLWithPort("/api/events/search/{query}"), HttpMethod.GET, null, Object.class, variables);
+
+        assertThat(responseEntity).isNotNull();
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
+
+        @SuppressWarnings("unchecked")
+        final List<Event> events = (List<Event>) responseEntity.getBody();
+        assertThat(events).isNotNull();
+        assertThat(events.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void testFindEventsString_Query_le()
+    {
+        final Map<String, String> variables = new HashMap<>(1);
+        variables.put("query", "le");
+
+        //
+        final ResponseEntity<Object> responseEntity = this.restTemplate.exchange(this.getURLWithPort("/api/events/search/{query}"), HttpMethod.GET, null, Object.class, variables);
+
+        assertThat(responseEntity).isNotNull();
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HttpStatus.OK.value());
+
+        @SuppressWarnings("unchecked")
+        final List<Event> events = (List<Event>) responseEntity.getBody();
+        assertThat(events).isNotNull();
+        assertThat(events.size()).isEqualTo(3);
     }
 }

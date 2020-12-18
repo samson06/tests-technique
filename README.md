@@ -1,6 +1,6 @@
 # Event Management REST API ![App-Build-State](https://img.shields.io/badge/build-success-brightgreen.svg?branch=master)
 
-'My Event' is an application to manage musical events (proposed by _**ADEO Services**_ for _**technical tests**_).
+'My Event' is an application to manage musical events (_**ADEO Services technical tests**_).
 'My Event' is simple RESTful web service using Spring and Java. 
 This web service provides an in-memory musical events management **Back-End** service, with the capability to :
 - Get a list of musical events and their relationships in the system.
@@ -15,8 +15,8 @@ For the Front-end, the user interface allows to :
 - Deleting a musical events.
 - Updating musical events information.
 
-## Technical stack
 
+## Technical stack
 ![](https://img.shields.io/badge/Java_8-✓-blue.svg)
 ![](https://img.shields.io/badge/Maven-✓-blue.svg)
 ![](https://img.shields.io/badge/Spring_boot-✓-blue.svg)
@@ -61,6 +61,7 @@ logging:
 - The user interface is available at : _http://localhost:<server.port>_
 - The API resources are available at : _http://localhost:<server.port>/api/_ 
 
+
 ## Identified Issues Analysis :
 
 _1. Adding review does not work_
@@ -74,6 +75,7 @@ _2. Using the delete button works but elements comes back when i refresh the pag
 - The transaction is readOnly activate (can't write, update, delete).
 - The suppress operation not really done in database.
 
+
 ## Issues Solutions Elements :
 
 _1. Adding review does not work_
@@ -86,15 +88,14 @@ _1. Adding review does not work_
 - Service layer : integrated DAO layer functions. 
 - Realize Tests for all components (Unit, Integration, Functional Tests).
 
-
 _2. Using the delete button works but elements comes back when i refresh the page_ 
-
+- remove transaction readOnly activation.
+- adding propagation for delete funtion in the DAO.
 
 
 ## New Feature
 ```
-Except for the testing libraries, No library/modules should be added to the dependencies
-(use only pure java)
+No library/modules not added to the dependencies, except for the testing libraries(only pure java use)
 ```
 
 1. We would like to enable a new route for the API `/search/{query}`. It will allow us
@@ -137,9 +138,23 @@ Example: `/search/Wa`
 }…]
 ```
 
-## Team Appreciation
+## Testing
+The tests were carried out during the realization with classic test tools.
 
-Team overall appreciation will be based on:
-- Code readability, structure and consistency
-- Tests, how they are written
-- Bonus: usage of Functional concepts
+### Type of Tests
+- Unit Tests
+- Integration Tests
+- Functional Tests
+
+### Tests Tools
+- JUnit 4
+- Spring Framework Tests tools with
+	- spring-boot-starter-test
+	- Assertions with assert-j
+	-...
+- JaCoCo maven plugin (with surefire and failsafe plugin) to produce the code coverage report.
+- Postman for testing API
+
+### Tests Coverage Metric
+Test coverage is measured and provided by JaCoCo. The image below provides app's code coverage with the exception of model layer objects.
+![JaCoCo Tests Coverage Report](./docs/tests_coverage_report.png "JaCoCo Tests Coverage Report")
