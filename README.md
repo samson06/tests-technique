@@ -1,7 +1,7 @@
 # Event Management REST API ![App-Build-State](https://img.shields.io/badge/build-success-brightgreen.svg?branch=master)
 
-'My Event' is an application to manage musical events (_**ADEO Services technical tests**_).
-'My Event' is simple RESTful web service using Spring and Java. 
+`My Event` is an application to manage musical events (_**ADEO Services technical tests**_).
+`My Event` is simple RESTful web service using Spring and Java. 
 This web service provides an in-memory musical events management **Back-End** service, with the capability to :
 - Get a list of musical events and their relationships in the system.
 - Delete a musical events and their relationships in the system.
