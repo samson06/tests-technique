@@ -67,10 +67,10 @@ The following REST endpoints are available upon deployment of the event manageme
 
 |HTTP Verb|URL|Description|Status Codes|
 |---|---|---|---|
-|`GET`|_http://localhost:<server.port>/api/events/_|Obtains a list of all existing musical events|`200 OK`|
-|`GET`|_http://localhost:<server.port>/api/events/search/{query}_|Obtains event filtered list to display|<ul><li>`200 OK` if event exists</li><li>`empty list or other` if the event does not exist</li></ul>|
-|`DELETE`|_http://localhost:<server.port>/api/events/{id}_|Deletes an existing event that corresponds to Id|<ul><li>`200 OK` if the event was successfully deleted</li><li>`500 Internal Server Error` if the event does not exist</li></ul>|
-|`PUT`|_http://localhost:<server.port>/api/events/{id}_|Updated an existing event with the data contained in the request body|<ul><li>`200 OK` if the event was successfully updated</li><li>`400 Bad Request` with null event or not exist Id</li><li>`405 Method Not Allowed` with null query pattern</li></ul> 
+|`GET`|_http://localhost:${server.port}/api/events/_|Obtains a list of all existing musical events|`200 OK`|
+|`GET`|_http://localhost:${server.port}/api/events/search/{query}_|Obtains event filtered list to display|<ul><li>`200 OK` if event exists</li><li>`empty list or other` if the event does not exist</li></ul>|
+|`DELETE`|_http://localhost:${server.port}/api/events/{id}_|Deletes an existing event that corresponds to Id|<ul><li>`200 OK` if the event was successfully deleted</li><li>`500 Internal Server Error` if the event does not exist</li></ul>|
+|`PUT`|_http://localhost:${server.port}/api/events/{id}_|Updated an existing event with the data contained in the request body|<ul><li>`200 OK` if the event was successfully updated</li><li>`400 Bad Request` with null event or not exist Id</li><li>`405 Method Not Allowed` with null query pattern</li></ul> 
 
 
 ## Issues Analysis :
@@ -150,12 +150,12 @@ Example: `/search/Wa`
 ```
 
 ## Testing
-The tests were carried out during the realization with classic test tools.
+Classic Java Spring tests tools are using to do tests.
 
 ### Type of Tests
-- Unit Tests
-- Integration Tests
-- Functional Tests
+- _Unit Tests_
+- _Integration Tests_
+- _Functional Tests_
 
 ### Tests Tools
 - Spring Framework Tests tools (_spring-boot-starter-test_) which embedded :
