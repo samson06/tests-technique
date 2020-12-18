@@ -83,6 +83,7 @@ _1. Adding review does not work_
 - In model layer activate cascaded propagation in associations for data persistence ou update.
 - DAO layer : 
 	- remove transaction readOnly activation.
+	- use readOnly default.
 	- adding new function to retrieve by her identifier a musical event with bands.
 	- adding new function to save a musical event with bands.
 - Service layer : integrated DAO layer functions. 
@@ -90,7 +91,7 @@ _1. Adding review does not work_
 
 _2. Using the delete button works but elements comes back when i refresh the page_ 
 - remove transaction readOnly activation.
-- adding propagation for delete funtion in the DAO.
+- use readOnly default.
 
 
 ## New Feature
@@ -98,10 +99,9 @@ _2. Using the delete button works but elements comes back when i refresh the pag
 No library/modules not added to the dependencies, except for the testing libraries(only pure java use)
 ```
 
-1. We would like to enable a new route for the API `/search/{query}`. It will allow us
-to display filtered `events`.
-The events are displayed only if at least one band has a member with the name matching the given
-pattern.
+1. Enable a new route for the API `/search/{query}`. 
+- get filtered `events`.
+- get filtered `events` only if at least one band has a member with the name matching the given pattern.
 
 Example: `/search/Wa`
 ```json
@@ -155,6 +155,6 @@ The tests were carried out during the realization with classic test tools.
 - JaCoCo maven plugin (with surefire and failsafe plugin) to produce the code coverage report.
 - Postman for testing API
 
-### Tests Coverage Metric
+### Tests Coverage Report
 Test coverage is measured and provided by JaCoCo. The image below provides app's code coverage with the exception of model layer objects.
 ![JaCoCo Tests Coverage Report](./docs/tests_coverage_report.png "JaCoCo Tests Coverage Report")
