@@ -19,7 +19,7 @@ For the Front-end, the user interface allows to :
 ## Technical stack
 ![](https://img.shields.io/badge/Java_8-✓-blue.svg)
 ![](https://img.shields.io/badge/Maven-✓-blue.svg)
-![](https://img.shields.io/badge/Spring_boot-✓-blue.svg)
+![](https://img.shields.io/badge/Spring_Boot-✓-blue.svg)
 ![](https://img.shields.io/badge/Jpa-✓-blue.svg)
 ![](https://img.shields.io/badge/Hibernate-✓-blue.svg)
 ![](https://img.shields.io/badge/HSQLDB-✓-blue.svg)
