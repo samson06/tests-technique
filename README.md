@@ -73,7 +73,7 @@ The following REST endpoints are available upon deployment of the event manageme
 |`PUT`|_http://localhost:${server.port}/api/events/{id}_|Updated an existing event with the data contained in the request body|<ul><li>`200 OK` if the event was successfully updated</li><li>`400 Bad Request` with null event or not exist Id</li><li>`405 Method Not Allowed` with null query pattern</li></ul> 
 
 
-## Issues Analysis :
+## Issues Analysis 
 
 _1. Adding review does not work_
 - No entry point for the user interface to trigger the update action.
@@ -87,7 +87,7 @@ _2. Using the delete button works but elements comes back when i refresh the pag
 - The suppress operation not really done in database.
 
 
-## Issues Solutions Elements :
+## Issues Solutions Elements 
 
 _1. Adding review does not work_
 - Adding new component on the user interface to triggering the update action.
@@ -110,8 +110,7 @@ _2. Using the delete button works but elements comes back when i refresh the pag
 No library/modules not added to the dependencies, except for the testing libraries(only pure java use)
 ```
 
-1. Enable a new route for the API `/search/{query}`. 
-- get filtered `events`.
+1. Enable a new route for the API `/search/{query}` to get filtered `events`.
 - get filtered `events` only if at least one band has a member with the name matching the given pattern.
 
 Example: `/search/Wa`

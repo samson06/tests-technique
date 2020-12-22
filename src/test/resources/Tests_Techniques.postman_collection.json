@@ -1,0 +1,140 @@
+{
+	"info": {
+		"_postman_id": "79decd85-84a7-41b2-8368-3ba37a750c68",
+		"name": "Tests_Techniques",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "FindsEvent",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/events/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"events",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FilteredEvents_Query_Wa",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"query\": \"{{query}}\"   \r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/events/search/Wa",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"events",
+						"search",
+						"Wa"
+					]
+				},
+				"description": "The events are displayed only if at least one band has a member with the name matching the given pattern"
+			},
+			"response": []
+		},
+		{
+			"name": "FilteredEvents_Query_le",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"query\": \"{{query}}\"   \r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/events/search/le",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"events",
+						"search",
+						"le"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FilteredEvents_Query_null",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"query\": \"{{query}}\"   \r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/events/search/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"events",
+						"search",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8086"
+		},
+		{
+			"key": "{{query}}",
+			"value": "{{query}}"
+		}
+	]
+}

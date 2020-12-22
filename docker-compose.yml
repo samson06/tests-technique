@@ -1,0 +1,8 @@
+version: '3'
+services:
+  my-event:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: my-event  
+    image: my-event:latest
