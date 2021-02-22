@@ -124,7 +124,8 @@ public class EventService
         List<Event> events = eventRepository.findAllBy();
         // Filter the events list in pure JAVA here
 
-        final List<Event> filteredList = events.stream()//
+        // final List<Event> filteredList = events.stream()//
+        return events.stream()//
         .filter(event -> event.getBands().stream() // Get event Set<Band>
         .map(Band::getMembers) // Set<Member> stream get
         .filter(Objects::nonNull)// filter non null member for Set
@@ -136,6 +137,6 @@ public class EventService
         )//
         .collect(Collectors.toList());
 
-        return filteredList;
+        // return filteredList;
     }
 }
